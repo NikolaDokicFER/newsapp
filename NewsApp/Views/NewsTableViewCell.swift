@@ -40,6 +40,8 @@ class NewsTableViewCell: UITableViewCell{
     
         contentView.addSubview(cellDescription)
     
+        cellImage.layer.cornerRadius = 5
+        cellImage.layer.masksToBounds = true
         contentView.addSubview(cellImage)
     }
     
@@ -63,6 +65,12 @@ class NewsTableViewCell: UITableViewCell{
             $0.trailing.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(10)
         }
+    }
+    
+    override func prepareForReuse() {
+        cellImage.image = nil
+        cellTitle.text = nil
+        cellDescription.text = nil
     }
     
     public func configure(text: String, description: String, url: String){

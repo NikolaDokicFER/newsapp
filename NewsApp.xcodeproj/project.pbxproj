@@ -18,7 +18,7 @@
 		8DBBA32928D8F12E005AA421 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBBA32828D8F12E005AA421 /* Article.swift */; };
 		8DBBA32B28D904B1005AA421 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBBA32A28D904B1005AA421 /* NewsTableViewCell.swift */; };
 		8DBBA32E28D9088C005AA421 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8DBBA32D28D9088C005AA421 /* SnapKit */; };
-		8DBBA33228D91CB1005AA421 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBBA33128D91CB1005AA421 /* SearchBarView.swift */; };
+		8DBBA33428D92A62005AA421 /* AllNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBBA33328D92A61005AA421 /* AllNewsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +34,7 @@
 		8DBBA32628D8F123005AA421 /* NewsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsResponse.swift; sourceTree = "<group>"; };
 		8DBBA32828D8F12E005AA421 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		8DBBA32A28D904B1005AA421 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
-		8DBBA33128D91CB1005AA421 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		8DBBA33328D92A61005AA421 /* AllNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				8DBBA32A28D904B1005AA421 /* NewsTableViewCell.swift */,
-				8DBBA33128D91CB1005AA421 /* SearchBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				8DBBA31028D8E508005AA421 /* ViewController.swift */,
+				8DBBA33328D92A61005AA421 /* AllNewsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -193,8 +193,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DBBA32928D8F12E005AA421 /* Article.swift in Sources */,
-				8DBBA33228D91CB1005AA421 /* SearchBarView.swift in Sources */,
 				8DBBA31128D8E508005AA421 /* ViewController.swift in Sources */,
+				8DBBA33428D92A62005AA421 /* AllNewsViewController.swift in Sources */,
 				8DBBA32B28D904B1005AA421 /* NewsTableViewCell.swift in Sources */,
 				8DBBA32428D8EEBE005AA421 /* RequestError.swift in Sources */,
 				8DBBA30D28D8E508005AA421 /* AppDelegate.swift in Sources */,
