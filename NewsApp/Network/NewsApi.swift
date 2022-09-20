@@ -44,11 +44,32 @@ class NewsApi{
         urlTask.resume()
     }
     
-    public func getAllNews(completion: @escaping (Result<[String], Error>) -> Void){
+    public func getAllNews(completion: @escaping (Result<[Article], RequestError>) -> Void){
         guard let url = allHeadlinesURL else { return }
         
-        let urlTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let urlTask = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else{
+                completion(.failure(.clientError))
+                return
+            }
             
+            guard let response = response as? HTTPURLResponse,
+                  (200...209).contains(response.statusCode) else {
+                completion(.failure(.serverError))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(.noDataError))
+                return
+            }
+
+            guard let value = try? JSONDecoder().decode(NewsResponse.self, from: data) else {
+                completion(.failure(.decodingError))
+                return
+            }
+            
+            completion(.success(value.articles))
         }
         urlTask.resume()
     }
