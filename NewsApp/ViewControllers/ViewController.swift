@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     private var articles = [ArticleViewModel]()
     private var filteredArticles = [ArticleViewModel]()
     private let searchController = UISearchController(searchResultsController: nil)
+    private let refreshControll = UIRefreshControl()
     private let latestButtoon = UIButton()
     private let oldestButton = UIButton()
 
@@ -25,6 +26,15 @@ class ViewController: UIViewController {
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
         
+        refreshControll.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControll.addTarget(self, action: #selector (refresh), for: .valueChanged)
+        
+        fetchNews()
+        styleViews()
+        constraintViews()
+    }
+    
+    private func fetchNews(){
         NewsApi.shared.getTopNews() { [weak self] result in
             switch result{
             case .failure(let error):
@@ -38,16 +48,15 @@ class ViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
+                    self?.refreshControll.endRefreshing()
                 }
             }
         }
-        
-        styleViews()
-        constraintViews()
     }
     
     private func styleViews(){
         tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.id)
+        tableView.addSubview(refreshControll)
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
@@ -69,7 +78,6 @@ class ViewController: UIViewController {
         oldestButton.layer.borderWidth = 2
         oldestButton.addTarget(self, action: #selector(sortOldest), for: .touchUpInside)
         view.addSubview(oldestButton)
-        
     }
     
     private func constraintViews(){
@@ -91,6 +99,11 @@ class ViewController: UIViewController {
             $0.top.equalTo(latestButtoon.snp.bottom).offset(10)
             $0.bottom.leading.trailing.equalToSuperview()
         }
+    }
+    
+    @objc func refresh(){
+        fetchNews()
+        sortLatest()
     }
     
     @objc func sortLatest(){
