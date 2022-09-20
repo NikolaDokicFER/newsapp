@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     private let tableView = UITableView()
     private var articles = [ArticleViewModel]()
     private var filteredArticles = [ArticleViewModel]()
-    private let searchController = UISearchController(searchResultsController: nil)
     private let refreshControll = UIRefreshControl()
     private let latestButtoon = UIButton()
     private let oldestButton = UIButton()
@@ -22,9 +21,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        navigationItem.searchController = searchController
-        searchController.searchBar.delegate = self
         
         refreshControll.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControll.addTarget(self, action: #selector (refresh), for: .valueChanged)
@@ -35,13 +31,13 @@ class ViewController: UIViewController {
     }
     
     private func fetchNews(){
-        NewsApi.shared.getTopNews() { [weak self] result in
+        NewsApi.shared.getNews(url: NewsApi.topHeadlinesURL) { [weak self] result in
             switch result{
             case .failure(let error):
                 print(error)
             case .success(let result):
                 self?.articles = result.compactMap({
-                    ArticleViewModel(title: $0.title, description: $0.description ?? "No Description", url: URL(string: $0.url), urlToImage: URL(string: $0.urlToImage ?? ""), datePosted: $0.publishedAt)
+                    ArticleViewModel(title: $0.title, description: $0.description ?? "No Description", url: URL(string: $0.url), urlToImage: URL(string: $0.urlToImage ?? ""), datePosted: String($0.publishedAt.prefix(19) + "Z"))
                 })
                 
                 self?.filteredArticles = self?.articles ?? []
@@ -157,21 +153,3 @@ extension ViewController: UITableViewDataSource{
         return 180
     }
 }
-
-extension ViewController: UISearchBarDelegate{
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if !searchText.isEmpty {
-            filteredArticles = articles.filter{
-                $0.title.range(of: searchText, options: .caseInsensitive) != nil }
-        } else {
-            filteredArticles = articles
-        }
-        self.tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        filteredArticles = articles
-        self.tableView.reloadData()
-    }
-}
-

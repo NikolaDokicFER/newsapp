@@ -21,18 +21,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let vc = ViewController()
-        vc.tabBarItem = UITabBarItem(title: "Top", image: UIImage(systemName: "star"),
-                                     selectedImage: UIImage(systemName: "star.fill"))
+        vc.tabBarItem = UITabBarItem(title: "Top", image: UIImage(systemName: "newspaper"),
+                                     selectedImage: UIImage(systemName: "newspaper.fill"))
         
         let avc = AllNewsViewController()
-        avc.tabBarItem = UITabBarItem(title: "All", image: UIImage(systemName: "newspaper"),
-                                      selectedImage: UIImage(systemName: "newspaper.fill"))
+        avc.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle"),
+                                      selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
         
         let topNavigationController = UINavigationController(rootViewController: vc)
         vc.navigationItem.title = "Top News"
         
         let allNavigationController = UINavigationController(rootViewController: avc)
-        avc.navigationItem.title = "All News"
+        avc.navigationItem.title = "Search News"
         
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [topNavigationController, allNavigationController]

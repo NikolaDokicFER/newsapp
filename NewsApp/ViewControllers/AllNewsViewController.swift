@@ -5,6 +5,7 @@
 //  Created by Nikola Đokić on 20.09.2022..
 //
 
+
 import UIKit
 import SafariServices
 
@@ -35,13 +36,13 @@ class AllNewsViewController: UIViewController{
     }
     
     private func fetchNews(){
-        NewsApi.shared.getAllNews() { [weak self] result in
+        NewsApi.shared.getNews(url: NewsApi.topHeadlinesURL) { [weak self] result in
             switch result{
             case .failure(let error):
                 print(error)
             case .success(let result):
                 self?.articles = result.compactMap({
-                    ArticleViewModel(title: $0.title, description: $0.description ?? "No Description", url: URL(string: $0.url), urlToImage: URL(string: $0.urlToImage ?? ""), datePosted: $0.publishedAt)
+                    ArticleViewModel(title: $0.title, description: $0.description ?? "No Description", url: URL(string: $0.url), urlToImage: URL(string: $0.urlToImage ?? ""), datePosted: String($0.publishedAt.prefix(19) + "Z"))
                 })
                 
                 self?.filteredArticles = self?.articles ?? []
