@@ -2,7 +2,7 @@
 //  NewsTableViewCell.swift
 //  NewsApp
 //
-//  Created by Karlo Tomašić on 19.09.2022..
+//  Created by Nikola Đokić on 19.09.2022..
 //
 
 import Foundation
@@ -73,20 +73,24 @@ class NewsTableViewCell: UITableViewCell{
         cellDescription.text = nil
     }
     
-    public func configure(text: String, description: String, url: String){
-        cellTitle.text = text
-        cellDescription.text = description
+    public func configure(with article: ArticleViewModel){
+        cellTitle.text = article.title
+        cellDescription.text = article.description
         
-        guard let imageUrl = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: imageUrl) { [weak self] data, response, error in
-            guard let data = data, error == nil else {
-                return
-            }
-
-            DispatchQueue.main.async {
-                self?.cellImage.image = UIImage(data: data)
-            }
-        }.resume()
+        if let data = article.imageData {
+            cellImage.image = UIImage(data: data)
+        }else if let url = article.urlToImage {
+            URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                guard let data = data, error == nil else {
+                    return
+                }
+                article.imageData = data
+                
+                DispatchQueue.main.async {
+                    self?.cellImage.image = UIImage(data: data)
+                }
+            }.resume()
+        }
     }
     
 }

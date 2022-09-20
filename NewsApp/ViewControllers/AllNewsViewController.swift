@@ -2,7 +2,7 @@
 //  AllNewsViewController.swift
 //  NewsApp
 //
-//  Created by Karlo Tomašić on 20.09.2022..
+//  Created by Nikola Đokić on 20.09.2022..
 //
 
 import Foundation

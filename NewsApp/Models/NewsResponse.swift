@@ -2,7 +2,7 @@
 //  NewsResponse.swift
 //  NewsApp
 //
-//  Created by Karlo Tomašić on 19.09.2022..
+//  Created by Nikola Đokić on 19.09.2022..
 //
 
 import Foundation

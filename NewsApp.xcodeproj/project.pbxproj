@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D18028728DA33E100B33269 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D18028628DA33E100B33269 /* ArticleViewModel.swift */; };
 		8DBBA30D28D8E508005AA421 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBBA30C28D8E508005AA421 /* AppDelegate.swift */; };
 		8DBBA30F28D8E508005AA421 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBBA30E28D8E508005AA421 /* SceneDelegate.swift */; };
 		8DBBA31128D8E508005AA421 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBBA31028D8E508005AA421 /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D18028628DA33E100B33269 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
 		8DBBA30928D8E508005AA421 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DBBA30C28D8E508005AA421 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DBBA30E28D8E508005AA421 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D18028828DA33E400B33269 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8D18028628DA33E100B33269 /* ArticleViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		8DBBA30028D8E508005AA421 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +87,7 @@
 				8DBBA32028D8EB3F005AA421 /* Network */,
 				8DBBA33028D91C74005AA421 /* ViewControllers */,
 				8DBBA32F28D91C6B005AA421 /* Views */,
+				8D18028828DA33E400B33269 /* ViewModels */,
 			);
 			path = NewsApp;
 			sourceTree = "<group>";
@@ -195,6 +206,7 @@
 				8DBBA32928D8F12E005AA421 /* Article.swift in Sources */,
 				8DBBA31128D8E508005AA421 /* ViewController.swift in Sources */,
 				8DBBA33428D92A62005AA421 /* AllNewsViewController.swift in Sources */,
+				8D18028728DA33E100B33269 /* ArticleViewModel.swift in Sources */,
 				8DBBA32B28D904B1005AA421 /* NewsTableViewCell.swift in Sources */,
 				8DBBA32428D8EEBE005AA421 /* RequestError.swift in Sources */,
 				8DBBA30D28D8E508005AA421 /* AppDelegate.swift in Sources */,
