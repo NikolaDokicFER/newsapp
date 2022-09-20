@@ -68,8 +68,8 @@ class ViewController: UIViewController {
         
         oldestButton.setTitle("oldest", for: .normal)
         oldestButton.layer.cornerRadius = 10
-        oldestButton.backgroundColor = .black
-        oldestButton.setTitleColor(.white, for: .normal)
+        oldestButton.backgroundColor = .systemGray4
+        oldestButton.setTitleColor(.black, for: .normal)
         oldestButton.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 1)
         oldestButton.layer.borderWidth = 2
         oldestButton.addTarget(self, action: #selector(sortOldest), for: .touchUpInside)
@@ -106,8 +106,8 @@ class ViewController: UIViewController {
         latestButtoon.backgroundColor = .white
         latestButtoon.setTitleColor(.black, for: .normal)
         
-        oldestButton.backgroundColor = .black
-        oldestButton.setTitleColor(.white, for: .normal)
+        oldestButton.backgroundColor = .systemGray4
+        oldestButton.setTitleColor(.black, for: .normal)
         
         filteredArticles = filteredArticles.sorted(by: {$0.datePosted > $1.datePosted})
         self.tableView.reloadData()
@@ -117,8 +117,8 @@ class ViewController: UIViewController {
         oldestButton.backgroundColor = .white
         oldestButton.setTitleColor(.black, for: .normal)
         
-        latestButtoon.backgroundColor = .black
-        latestButtoon.setTitleColor(.white, for: .normal)
+        latestButtoon.backgroundColor = .systemGray4
+        latestButtoon.setTitleColor(.black, for: .normal)
         
         filteredArticles = filteredArticles.sorted(by: {$0.datePosted < $1.datePosted})
         self.tableView.reloadData()

@@ -18,6 +18,10 @@ class AllNewsViewController: UIViewController{
     private let refreshControll = UIRefreshControl()
     private let latestButtoon = UIButton()
     private let oldestButton = UIButton()
+    private let articlesShown = UITextField()
+    private let pickerView = UIPickerView()
+    private let articleAmount = ["10","20","30","40","50"]
+    private var query = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +34,16 @@ class AllNewsViewController: UIViewController{
         refreshControll.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControll.addTarget(self, action: #selector (refresh), for: .valueChanged)
         
-        fetchNews()
         styleViews()
         constraintViews()
     }
     
     private func fetchNews(){
-        NewsApi.shared.getNews(url: NewsApi.topHeadlinesURL) { [weak self] result in
+        let urlStart = "https://newsapi.org/v2/everything?q=" + query + "&pageSize="
+        let url = urlStart + (articlesShown.text ?? "10") + "&apiKey=669fe9294b26416f9be5bd955b7a764c"
+        let searchURL = URL(string: url)
+        
+        NewsApi.shared.getNews(url: searchURL) { [weak self] result in
             switch result{
             case .failure(let error):
                 print(error)
@@ -55,12 +62,16 @@ class AllNewsViewController: UIViewController{
         }
     }
     
+    
     private func styleViews(){
         tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.id)
         tableView.addSubview(refreshControll)
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
         
         latestButtoon.setTitle("latest", for: .normal)
         latestButtoon.layer.cornerRadius = 10
@@ -73,12 +84,22 @@ class AllNewsViewController: UIViewController{
         
         oldestButton.setTitle("oldest", for: .normal)
         oldestButton.layer.cornerRadius = 10
-        oldestButton.backgroundColor = .black
-        oldestButton.setTitleColor(.white, for: .normal)
+        oldestButton.backgroundColor = .systemGray4
+        oldestButton.setTitleColor(.black, for: .normal)
         oldestButton.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 1)
         oldestButton.layer.borderWidth = 2
         oldestButton.addTarget(self, action: #selector(sortOldest), for: .touchUpInside)
         view.addSubview(oldestButton)
+        
+        articlesShown.inputView = pickerView
+        articlesShown.text = "10"
+        articlesShown.backgroundColor = .white
+        articlesShown.textAlignment = .center
+        articlesShown.textColor = .black
+        articlesShown.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 1)
+        articlesShown.layer.borderWidth = 2
+        articlesShown.layer.cornerRadius = 5
+        view.addSubview(articlesShown)
     }
     
     private func constraintViews(){
@@ -93,6 +114,13 @@ class AllNewsViewController: UIViewController{
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.equalToSuperview().inset(85)
             $0.width.equalTo(90)
+            $0.height.equalTo(30)
+        }
+        
+        articlesShown.snp.makeConstraints(){
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.equalTo(oldestButton.snp.trailing).offset(20)
+            $0.width.equalTo(30)
             $0.height.equalTo(30)
         }
         
@@ -111,8 +139,8 @@ class AllNewsViewController: UIViewController{
         latestButtoon.backgroundColor = .white
         latestButtoon.setTitleColor(.black, for: .normal)
         
-        oldestButton.backgroundColor = .black
-        oldestButton.setTitleColor(.white, for: .normal)
+        oldestButton.backgroundColor = .systemGray4
+        oldestButton.setTitleColor(.black, for: .normal)
         
         filteredArticles = filteredArticles.sorted(by: {$0.datePosted > $1.datePosted})
         self.tableView.reloadData()
@@ -122,8 +150,8 @@ class AllNewsViewController: UIViewController{
         oldestButton.backgroundColor = .white
         oldestButton.setTitleColor(.black, for: .normal)
         
-        latestButtoon.backgroundColor = .black
-        latestButtoon.setTitleColor(.white, for: .normal)
+        latestButtoon.backgroundColor = .systemGray4
+        latestButtoon.setTitleColor(.black, for: .normal)
         
         filteredArticles = filteredArticles.sorted(by: {$0.datePosted < $1.datePosted})
         self.tableView.reloadData()
@@ -161,13 +189,15 @@ extension AllNewsViewController: UITableViewDataSource{
 
 extension AllNewsViewController: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if !searchText.isEmpty {
-            filteredArticles = articles.filter{
-                $0.title.range(of: searchText, options: .caseInsensitive) != nil }
-        } else {
-            filteredArticles = articles
+        if !searchText.isEmpty{
+            query = searchText
+        }else{
+            query = ""
         }
-        self.tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        fetchNews()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -175,3 +205,26 @@ extension AllNewsViewController: UISearchBarDelegate{
         self.tableView.reloadData()
     }
 }
+
+extension AllNewsViewController: UIPickerViewDelegate{
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return articleAmount[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        articlesShown.text = articleAmount[row]
+        articlesShown.resignFirstResponder()
+        fetchNews()
+    }
+}
+
+extension AllNewsViewController: UIPickerViewDataSource{
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return articleAmount.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+}
+
